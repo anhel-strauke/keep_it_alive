@@ -13,7 +13,7 @@ var time := 0.0
 var base_tile: int = 0
 var state = IDLE
 
-onready var particles = $Particles2D
+const WaterSplashEffectScene = preload("res://effects/WaterSplashEffect.tscn")
 
 signal clicked_at(global_pos)
 signal need_set_tile(global_pos, tile_type)
@@ -25,10 +25,9 @@ func _ready() -> void:
 
 
 func _do_splash():
-	if particles.emitting:
-		particles.restart()
-	else:
-		particles.emitting = true
+	var effect = WaterSplashEffectScene.instance()
+	get_tree().root.add_child(effect)
+	effect.global_position = global_position
 
 
 func _switch():
