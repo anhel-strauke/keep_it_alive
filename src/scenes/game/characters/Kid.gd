@@ -5,7 +5,8 @@ enum {
 	INITIAL,
 	MOVE,
 	IDLE,
-	RUN_AWAY
+	RUN_AWAY,
+	RUN_TO_DEATH
 }
 
 enum {
@@ -18,13 +19,14 @@ var state: int = INITIAL
 var time: float = 0.0
 var speed: float = 0.0
 var run_away_target := Vector2.ZERO
+var death_target := Vector2.ZERO
 var direction := LEFT
 
 const minimal_distance = 24.0
 const maximum_distance = 72.0
 const min_speed = 20.0
 const max_speed = 30.0
-const run_away_speed = 45.0
+const run_away_speed = 55.0
 
 onready var anim_player = $AnimationPlayer
 onready var sprite = $sprite
@@ -79,6 +81,8 @@ func _process(delta: float) -> void:
 				state = INITIAL
 			else:
 				move(run_away_target, speed * delta)
+		RUN_TO_DEATH:
+			move(death_target, speed * delta)
 
 
 func _distance_to_ship() -> float:
@@ -105,5 +109,10 @@ func run_away() -> void:
 		run_away_target = Vector2(320.0 + 32.0, global_position.y)
 		direction = RIGHT
 	speed = run_away_speed
-	
-	
+
+
+func run_to_death(global_point: Vector2) -> void:
+	state = RUN_TO_DEATH
+	anim_player.play("walk")
+	death_target = global_point
+	speed = max_speed

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scenes/game/GameWorld.gd" type="Script" id=1]
 [ext_resource path="res://textures/world/background.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://scenes/game/ShipMaster.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/game/ShipSpawner.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scenes/game/Hole.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/game/PennywiseDrain.tscn" type="PackedScene" id=8]
 
 [sub_resource type="Animation" id=1]
 resource_name = "spawn"
@@ -27,7 +28,7 @@ __meta__ = {
 
 [node name="WaterTileMap" parent="." instance=ExtResource( 3 )]
 modulate = Color( 1, 1, 1, 0.501961 )
-tile_data = PoolIntArray( -131059, 3, 0, -65523, 3, 0, 13, 3, 0, 131070, 0, 0, 131071, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 4, 0, 65549, 3, 0, 65552, 11, 0, 65553, 1, 0, 65554, 1, 0, 65555, 1, 0, 65556, 1, 0, 65557, 1, 0, 131076, 2, 0, 131080, 3, 0, 131081, 3, 0, 131082, 3, 0, 131083, 3, 0, 131085, 3, 0, 131088, 2, 0, 196612, 9, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 7, 0, 196617, 3, 0, 196618, 3, 0, 196619, 8, 0, 196620, 1, 0, 196621, 1, 0, 196622, 1, 0, 196623, 1, 0, 196624, 6, 0, 262148, 2, 0, 262153, 3, 0, 262154, 3, 0, 262160, 2, 0, 327688, 1, 0, 327689, 3, 0, 327690, 3, 0, 327696, 9, 0, 327697, 4, 0, 393220, 3, 0, 393225, 3, 0, 393226, 8, 0, 393227, 1, 0, 393228, 1, 0, 393229, 1, 0, 393230, 1, 0, 393231, 5, 0, 393232, 0, 0, 458754, 10, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 458759, 0, 0, 458760, 0, 0, 458761, 7, 0, 458764, 2, 0, 458767, 3, 0, 524290, 3, 0, 524297, 2, 0, 524300, 2, 0, 524303, 3, 0, 589826, 3, 0, 589836, 2, 0, 589839, 8, 0, 589840, 1, 0, 589841, 1, 0, 589842, 1, 0, 589843, 1, 0, 589844, 1, 0, 589845, 1, 0, 655362, 3, 0, 655372, 2, 0, 720898, 3, 0, 720908, 2, 0, 786434, 3, 0, 786444, 2, 0 )
+tile_data = PoolIntArray( -131059, 3, 0, -65523, 3, 0, 13, 3, 0, 131070, 0, 0, 131071, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 4, 0, 65549, 3, 0, 65552, 11, 0, 65553, 1, 0, 65554, 1, 0, 65555, 1, 0, 65556, 1, 0, 65557, 1, 0, 131076, 2, 0, 131080, 3, 0, 131081, 3, 0, 131082, 3, 0, 131083, 3, 0, 131085, 3, 0, 131088, 2, 0, 196612, 2, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 7, 0, 196617, 3, 0, 196618, 3, 0, 196619, 8, 0, 196620, 1, 0, 196621, 8, 0, 196622, 1, 0, 196623, 1, 0, 196624, 2, 0, 262148, 2, 0, 262153, 3, 0, 262154, 3, 0, 262160, 2, 0, 327688, 1, 0, 327689, 5, 0, 327690, 3, 0, 327696, 9, 0, 327697, 4, 0, 393220, 3, 0, 393225, 3, 0, 393226, 8, 0, 393227, 1, 0, 393228, 4, 0, 393229, 1, 0, 393230, 1, 0, 393231, 10, 0, 393232, 0, 0, 458754, 10, 0, 458755, 0, 0, 458756, 7, 0, 458757, 0, 0, 458758, 0, 0, 458759, 0, 0, 458760, 0, 0, 458761, 4, 0, 458764, 2, 0, 458767, 3, 0, 524290, 3, 0, 524297, 2, 0, 524300, 2, 0, 524303, 3, 0, 589826, 3, 0, 589836, 2, 0, 589839, 8, 0, 589840, 1, 0, 589841, 1, 0, 589842, 1, 0, 589843, 1, 0, 589844, 1, 0, 589845, 1, 0, 655362, 3, 0, 655372, 2, 0, 720898, 3, 0, 720908, 2, 0, 786434, 3, 0, 786444, 2, 0 )
 
 [node name="ShipSpawnAnim" type="AnimationPlayer" parent="."]
 autoplay = "spawn"
@@ -63,19 +64,22 @@ position = Vector2( 248, 104 )
 
 [node name="ShipSpawner" parent="Spawners" instance=ExtResource( 6 )]
 position = Vector2( -24, 24 )
-delay = 3.0
+delay = 5.0
 mode = 1
 
 [node name="ShipSpawner2" parent="Spawners" instance=ExtResource( 6 )]
 position = Vector2( 40, 200 )
-delay = 2.0
+delay = 4.0
 mode = 1
 
 [node name="ShipSpawner4" parent="Spawners" instance=ExtResource( 6 )]
 position = Vector2( 344, 152 )
+mode = 1
 
 [node name="ShipSpawner5" parent="Spawners" instance=ExtResource( 6 )]
 position = Vector2( 344, 24 )
+delay = 6.0
+mode = 1
 
 [node name="Holes" type="Node2D" parent="."]
 
@@ -90,5 +94,8 @@ position = Vector2( 280, 104 )
 
 [node name="Hole4" parent="Holes" instance=ExtResource( 7 )]
 position = Vector2( 152, 152 )
+
+[node name="PennywiseDrain" parent="." instance=ExtResource( 8 )]
+position = Vector2( 128, 16 )
 
 [node name="CharactersRoot" type="YSort" parent="."]

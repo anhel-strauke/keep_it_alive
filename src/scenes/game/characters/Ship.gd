@@ -3,6 +3,7 @@ class_name Ship
 
 export var speed: float = 25.0
 var path: PoolVector2Array = PoolVector2Array()
+onready var area = $Area2D
 
 signal dead_end_reached(ship)
 
@@ -21,10 +22,7 @@ func move_along_path(distance: float) -> void:
 	for _i in range(path.size()):
 		var dist_to_next = start_point.distance_to(path[0])
 		if distance <= dist_to_next and distance >= 0.0:
-			#var old_glob = global_position
 			global_position = start_point.linear_interpolate(path[0], distance / dist_to_next)
-			#if old_glob.y > global_position.y:
-			#	set_process(false)
 			break
 		elif distance < 0.0:
 			global_position = path[0]

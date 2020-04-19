@@ -8,9 +8,14 @@ var spawners: Array = []
 var ships: Array = []
 var water_switches: Array = []
 var kids: Array = []
+var pennywise_drain: PennywiseDrain = null
 
 const ShipScene = preload("res://scenes/game/characters/Ship.tscn")
 const KidScene = preload("res://scenes/game/characters/Kid.tscn")
+
+
+signal ship_destroyed(ship)
+
 
 func _ready() -> void:
 	var node = get_parent()
@@ -26,6 +31,7 @@ func _ready() -> void:
 	_collect_spawners(world)
 	_collect_water_switches(world)
 	_find_chars_root(world)
+	_find_pennywise_drain(world)
 
 
 func _find_tilemap(node: Node) -> bool:
@@ -55,6 +61,8 @@ func _collect_water_switches(node: Node) -> void:
 		if child is WaterSwitch:
 			var water_sw = child as WaterSwitch
 			water_sw.connect("clicked_at", tilemap, "switch_tile_at")
+			water_sw.connect("need_set_tile", tilemap, "set_tile_at")
+			water_sw.base_tile = tilemap.tile_type_at(water_sw.global_position)
 			water_switches.append(water_sw)
 		else:
 			_collect_water_switches(child)
@@ -67,6 +75,18 @@ func _find_chars_root(node: Node) -> bool:
 			return true
 		else:
 			if _find_chars_root(child):
+				return true
+	return false
+
+
+func _find_pennywise_drain(node: Node) -> bool:
+	for child in node.get_children():
+		if child is PennywiseDrain:
+			pennywise_drain = child as PennywiseDrain
+			pennywise_drain.connect("kid_captured", self, "kill_kid")
+			return true
+		else:
+			if _find_pennywise_drain(child):
 				return true
 	return false
 
@@ -88,9 +108,12 @@ func create_ship_at(global_pos: Vector2) -> void:
 
 
 func draw_ship(ship: Ship) -> void:
+	var catch = pennywise_drain.has_ship(ship)
 	for kid in kids:
 		if kid.ship == ship:
 			kid.ship = null
+			if catch:
+				kid.run_to_death(pennywise_drain.kid_position())
 			break
 	var i = ships.find(ship)
 	if i >= 0:
@@ -99,6 +122,13 @@ func draw_ship(ship: Ship) -> void:
 
 
 func free_kid(kid: Kid) -> void:
+	var i = kids.find(kid)
+	if i >= 0:
+		kids.remove(i)
+	kid.queue_free()
+
+
+func kill_kid(kid: Kid) -> void:
 	var i = kids.find(kid)
 	if i >= 0:
 		kids.remove(i)

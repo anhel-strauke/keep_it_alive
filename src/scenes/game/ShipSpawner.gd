@@ -30,5 +30,4 @@ func _process(delta: float) -> void:
 				mode = SpawnerMode.OFF
 
 func spawn():
-	print("Spawning ship at ", global_position)
 	emit_signal("spawn_ship_at", global_position)

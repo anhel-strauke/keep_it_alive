@@ -181,3 +181,14 @@ func switch_tile_at(global_point: Vector2) -> void:
 							return
 		new_out_dir = _next_direction(new_out_dir)
 	emit_signal("tile_switch_failed", tile_pos)
+
+
+func set_tile_at(global_point: Vector2, tile_type: int) -> void:
+	var tile_pos = world_to_map(to_local(global_point))
+	set_cellv(tile_pos, tile_type)
+	emit_signal("tile_switched", tile_pos)
+
+
+func tile_type_at(global_point: Vector2) -> int:
+	var tile_pos = world_to_map(to_local(global_point))
+	return get_cellv(tile_pos)

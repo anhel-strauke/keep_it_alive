@@ -1,14 +1,22 @@
 extends Node2D
 class_name WaterSwitch
 
+enum {
+	CLICKED,
+	IDLE
+}
+
 export var auto_switch_time: float = 4.0
 
 var was_pressed := false
 var time := 0.0
+var base_tile: int = 0
+var state = IDLE
 
 onready var particles = $Particles2D
 
 signal clicked_at(global_pos)
+signal need_set_tile(global_pos, tile_type)
 
 var busy: bool = false
 
@@ -29,11 +37,17 @@ func _switch():
 	time = 0.0
 
 
+func _restore():
+	emit_signal("need_set_tile", global_position, base_tile)
+	_do_splash()
+
+
 func _process(delta: float) -> void:
-	if not busy:
+	if not busy and state == CLICKED:
 		time += delta
 		if time > auto_switch_time:
-			_switch()
+			_restore()
+			state = IDLE
 
 
 func _on_Area2D_input_event(_viewport, event, _shape_idx) -> void:
@@ -45,6 +59,7 @@ func _on_Area2D_input_event(_viewport, event, _shape_idx) -> void:
 		return
 	if event.pressed and not was_pressed:
 		_switch()
+		state = CLICKED
 		was_pressed = true
 	else:
 		was_pressed = false

@@ -25,6 +25,11 @@ _global_script_classes=[ {
 "path": "res://scenes/game/characters/Kid.gd"
 }, {
 "base": "Node2D",
+"class": "PennywiseDrain",
+"language": "GDScript",
+"path": "res://scenes/game/PennywiseDrain.gd"
+}, {
+"base": "Node2D",
 "class": "Ship",
 "language": "GDScript",
 "path": "res://scenes/game/characters/Ship.gd"
@@ -53,6 +58,7 @@ _global_script_class_icons={
 "GameWorld": "",
 "Hole": "",
 "Kid": "",
+"PennywiseDrain": "",
 "Ship": "",
 "ShipMaster": "",
 "ShipSpawner": "res://textures/sprites/ship.png",
@@ -106,6 +112,7 @@ texture={
 2d_physics/layer_1="UI"
 2d_physics/layer_2="Water Switch"
 2d_physics/layer_3="Floating"
+2d_physics/layer_4="Kids"
 
 [rendering]
 
