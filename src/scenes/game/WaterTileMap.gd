@@ -81,9 +81,9 @@ func _neighbour_water_tile_pos(tile_pos: Vector2) -> Vector2:
 			if neighb_in_direction == dir_from_this:
 				return neightbour_pos
 			else:
-				print("Directions conflict: ", tile_pos, " and ", neightbour_pos, "; dirs are ", dir_from_this, " and ", neighb_in_direction)
+				print("WARNING! Directions conflict: ", tile_pos, " and ", neightbour_pos, "; dirs are ", dir_from_this, " and ", neighb_in_direction)
 		else:
-			print("Not a water tile: ", neightbour_pos)
+			return neightbour_pos
 	else:
 		print("No neighbour for: ", tile_pos, " at ", dir_from_this)
 	return Vector2.INF
@@ -115,7 +115,6 @@ func next_tile_pos(tile_pos: Vector2) -> Vector2:
 	var this_tile_type = get_cellv(tile_pos)
 	if _is_water_tile(this_tile_type):
 		return _neighbour_water_tile_pos(tile_pos)
-	print("Tile is not a water type: ", tile_pos)
 	return Vector2.INF
 
 

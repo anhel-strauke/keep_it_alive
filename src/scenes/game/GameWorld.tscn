@@ -1,96 +1,17 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scenes/game/GameWorld.gd" type="Script" id=1]
 [ext_resource path="res://textures/world/background.png" type="Texture" id=2]
 [ext_resource path="res://scenes/game/WaterTileMap.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/game/ShipSpawner.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/game/WaterSwitch.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/game/ShipMaster.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/game/WaterSwitch.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/game/ShipSpawner.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/game/Hole.tscn" type="PackedScene" id=7]
 
 [sub_resource type="Animation" id=1]
 resource_name = "spawn"
 length = 30.0
 loop = true
-tracks/0/type = "method"
-tracks/0/path = NodePath("ShipSpawner")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 1.1, 5.1, 17.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"values": [ {
-"args": [  ],
-"method": "spawn"
-}, {
-"args": [  ],
-"method": "spawn"
-}, {
-"args": [  ],
-"method": "spawn"
-} ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath("ShipSpawner2")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 3.1, 12, 25.7 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"values": [ {
-"args": [  ],
-"method": "spawn"
-}, {
-"args": [  ],
-"method": "spawn"
-}, {
-"args": [  ],
-"method": "spawn"
-} ]
-}
-tracks/2/type = "method"
-tracks/2/path = NodePath("ShipSpawner3")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 6.3, 14.2, 28.4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"values": [ {
-"args": [  ],
-"method": "spawn"
-}, {
-"args": [  ],
-"method": "spawn"
-}, {
-"args": [  ],
-"method": "spawn"
-} ]
-}
-tracks/3/type = "method"
-tracks/3/path = NodePath("ShipSpawner4")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 7.1, 19.2, 28.4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"values": [ {
-"args": [  ],
-"method": "spawn"
-}, {
-"args": [  ],
-"method": "spawn"
-}, {
-"args": [  ],
-"method": "spawn"
-} ]
-}
 
 [node name="GameWorld" type="Node2D"]
 script = ExtResource( 1 )
@@ -106,40 +27,68 @@ __meta__ = {
 
 [node name="WaterTileMap" parent="." instance=ExtResource( 3 )]
 modulate = Color( 1, 1, 1, 0.501961 )
-tile_data = PoolIntArray( -131067, 3, 0, -65531, 3, 0, 5, 3, 0, 131071, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 4, 0, 65541, 3, 0, 65553, 11, 0, 65554, 1, 0, 65555, 1, 0, 65556, 1, 0, 131074, 2, 0, 131077, 3, 0, 131081, 3, 0, 131082, 3, 0, 131083, 3, 0, 131084, 3, 0, 131089, 2, 0, 196610, 9, 0, 196611, 0, 0, 196612, 0, 0, 196613, 7, 0, 196614, 0, 0, 196615, 0, 0, 196616, 0, 0, 196617, 7, 0, 196618, 3, 0, 196619, 3, 0, 196620, 3, 0, 196625, 2, 0, 262154, 3, 0, 262155, 3, 0, 262156, 8, 0, 262157, 1, 0, 262158, 11, 0, 262159, 1, 0, 262160, 1, 0, 262161, 6, 0, 327682, 10, 0, 327683, 0, 0, 327684, 0, 0, 327685, 4, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0, 327689, 0, 0, 327690, 7, 0, 327691, 3, 0, 327694, 2, 0, 393218, 3, 0, 393221, 2, 0, 393227, 8, 0, 393228, 5, 0, 393230, 9, 0, 393231, 0, 0, 393232, 0, 0, 393233, 0, 0, 393234, 0, 0, 393235, 0, 0, 393236, 0, 0, 458754, 3, 0, 458757, 2, 0, 458764, 3, 0, 589823, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 7, 0, 524293, 2, 0, 524300, 3, 0, 524304, 11, 0, 524305, 1, 0, 524306, 1, 0, 524307, 1, 0, 524308, 1, 0, 589829, 2, 0, 589836, 11, 0, 589837, 1, 0, 589838, 1, 0, 589839, 1, 0, 589840, 6, 0, 655365, 2, 0, 655372, 2, 0, 720901, 2, 0, 720908, 2, 0, 786437, 2, 0 )
+tile_data = PoolIntArray( -131059, 3, 0, -65523, 3, 0, 13, 3, 0, 131070, 0, 0, 131071, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 4, 0, 65549, 3, 0, 65552, 11, 0, 65553, 1, 0, 65554, 1, 0, 65555, 1, 0, 65556, 1, 0, 65557, 1, 0, 131076, 2, 0, 131080, 3, 0, 131081, 3, 0, 131082, 3, 0, 131083, 3, 0, 131085, 3, 0, 131088, 2, 0, 196612, 9, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 7, 0, 196617, 3, 0, 196618, 3, 0, 196619, 8, 0, 196620, 1, 0, 196621, 1, 0, 196622, 1, 0, 196623, 1, 0, 196624, 6, 0, 262148, 2, 0, 262153, 3, 0, 262154, 3, 0, 262160, 2, 0, 327688, 1, 0, 327689, 3, 0, 327690, 3, 0, 327696, 9, 0, 327697, 4, 0, 393220, 3, 0, 393225, 3, 0, 393226, 8, 0, 393227, 1, 0, 393228, 1, 0, 393229, 1, 0, 393230, 1, 0, 393231, 5, 0, 393232, 0, 0, 458754, 10, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 0, 0, 458759, 0, 0, 458760, 0, 0, 458761, 7, 0, 458764, 2, 0, 458767, 3, 0, 524290, 3, 0, 524297, 2, 0, 524300, 2, 0, 524303, 3, 0, 589826, 3, 0, 589836, 2, 0, 589839, 8, 0, 589840, 1, 0, 589841, 1, 0, 589842, 1, 0, 589843, 1, 0, 589844, 1, 0, 589845, 1, 0, 655362, 3, 0, 655372, 2, 0, 720898, 3, 0, 720908, 2, 0, 786434, 3, 0, 786444, 2, 0 )
 
 [node name="ShipSpawnAnim" type="AnimationPlayer" parent="."]
 autoplay = "spawn"
 anims/spawn = SubResource( 1 )
 
-[node name="ShipSpawner" parent="." instance=ExtResource( 4 )]
-position = Vector2( -8, 24 )
-mode = 2
+[node name="WaterSwitches" type="Node2D" parent="."]
 
-[node name="ShipSpawner2" parent="." instance=ExtResource( 4 )]
-position = Vector2( -8, 136 )
-mode = 2
+[node name="WaterSwitch" parent="WaterSwitches" instance=ExtResource( 4 )]
+position = Vector2( 72, 120 )
 
-[node name="ShipSpawner3" parent="." instance=ExtResource( 4 )]
-position = Vector2( 328, 136 )
-mode = 2
+[node name="WaterSwitch2" parent="WaterSwitches" instance=ExtResource( 4 )]
+position = Vector2( 72, 56 )
 
-[node name="ShipSpawner4" parent="." instance=ExtResource( 4 )]
-position = Vector2( 328, 24 )
-mode = 2
+[node name="WaterSwitch3" parent="WaterSwitches" instance=ExtResource( 4 )]
+position = Vector2( 152, 88 )
 
-[node name="WaterSwitch" parent="." instance=ExtResource( 6 )]
-position = Vector2( 88, 56 )
+[node name="WaterSwitch4" parent="WaterSwitches" instance=ExtResource( 4 )]
+position = Vector2( 152, 120 )
 
-[node name="WaterSwitch2" parent="." instance=ExtResource( 6 )]
-position = Vector2( 88, 88 )
+[node name="WaterSwitch5" parent="WaterSwitches" instance=ExtResource( 4 )]
+position = Vector2( 200, 104 )
 
-[node name="WaterSwitch3" parent="." instance=ExtResource( 6 )]
-position = Vector2( 200, 152 )
+[node name="WaterSwitch6" parent="WaterSwitches" instance=ExtResource( 4 )]
+position = Vector2( 264, 56 )
 
-[node name="WaterSwitch4" parent="." instance=ExtResource( 6 )]
-position = Vector2( 232, 72 )
+[node name="WaterSwitch7" parent="WaterSwitches" instance=ExtResource( 4 )]
+position = Vector2( 216, 56 )
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color( 0.117647, 0.121569, 0.227451, 1 )
-polygon = PoolVector2Array( 144, 32, 208, 32, 208, 16, 144, 16 )
+[node name="WaterSwitch8" parent="WaterSwitches" instance=ExtResource( 4 )]
+position = Vector2( 248, 104 )
+
+[node name="Spawners" type="Node2D" parent="."]
+
+[node name="ShipSpawner" parent="Spawners" instance=ExtResource( 6 )]
+position = Vector2( -24, 24 )
+delay = 3.0
+mode = 1
+
+[node name="ShipSpawner2" parent="Spawners" instance=ExtResource( 6 )]
+position = Vector2( 40, 200 )
+delay = 2.0
+mode = 1
+
+[node name="ShipSpawner4" parent="Spawners" instance=ExtResource( 6 )]
+position = Vector2( 344, 152 )
+
+[node name="ShipSpawner5" parent="Spawners" instance=ExtResource( 6 )]
+position = Vector2( 344, 24 )
+
+[node name="Holes" type="Node2D" parent="."]
+
+[node name="Hole" parent="Holes" instance=ExtResource( 7 )]
+position = Vector2( 72, 88 )
+
+[node name="Hole2" parent="Holes" instance=ExtResource( 7 )]
+position = Vector2( 120, 88 )
+
+[node name="Hole3" parent="Holes" instance=ExtResource( 7 )]
+position = Vector2( 280, 104 )
+
+[node name="Hole4" parent="Holes" instance=ExtResource( 7 )]
+position = Vector2( 152, 152 )
+
+[node name="CharactersRoot" type="YSort" parent="."]
