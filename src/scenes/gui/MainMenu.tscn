@@ -1,0 +1,211 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://textures/world/background.png" type="Texture" id=1]
+[ext_resource path="res://textures/gui/game_title.png" type="Texture" id=2]
+[ext_resource path="res://fonts/ARCADECLASSIC.TTF" type="DynamicFontData" id=3]
+[ext_resource path="res://textures/gui/button.png" type="Texture" id=4]
+[ext_resource path="res://scenes/gui/MainMenu.gd" type="Script" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 3 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "moving_road"
+length = 18.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("moving_bg:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 18 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -320, 0 ) ]
+}
+
+[sub_resource type="DynamicFont" id=5]
+size = 12
+font_data = ExtResource( 3 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "appear"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "disappear"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "finish_transition"
+} ]
+}
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="moving_bg" type="Node2D" parent="."]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="background" type="Sprite" parent="moving_bg"]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="background2" type="Sprite" parent="moving_bg"]
+position = Vector2( 320, 0 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="game_title" type="Sprite" parent="."]
+position = Vector2( 160, 48 )
+texture = ExtResource( 2 )
+
+[node name="buttons" type="Node2D" parent="."]
+position = Vector2( 0, 96 )
+
+[node name="start_button" type="Sprite" parent="buttons"]
+position = Vector2( 160, 12 )
+texture = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="buttons/start_button"]
+margin_left = -52.0
+margin_top = -8.0
+margin_right = 52.0
+margin_bottom = 9.0
+custom_fonts/font = SubResource( 1 )
+text = "START"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="credits_button" type="Sprite" parent="buttons"]
+position = Vector2( 160, 38 )
+texture = ExtResource( 4 )
+
+[node name="Label2" type="Label" parent="buttons/credits_button"]
+margin_left = -52.0
+margin_top = -8.0
+margin_right = 52.0
+margin_bottom = 9.0
+custom_fonts/font = SubResource( 1 )
+text = "CREDITS"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="exit_button" type="Sprite" parent="buttons"]
+position = Vector2( 160, 64 )
+texture = ExtResource( 4 )
+
+[node name="Label3" type="Label" parent="buttons/exit_button"]
+margin_left = -52.0
+margin_top = -8.0
+margin_right = 52.0
+margin_bottom = 9.0
+custom_fonts/font = SubResource( 1 )
+text = "EXIT"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="road_anim" type="AnimationPlayer" parent="."]
+autoplay = "moving_road"
+anims/moving_road = SubResource( 2 )
+
+[node name="HiScoreLbl" type="Label" parent="."]
+margin_left = 260.0
+margin_top = 152.0
+margin_right = 316.0
+margin_bottom = 165.0
+custom_fonts/font = SubResource( 5 )
+text = "HI  SCORE"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HiScore" type="Label" parent="."]
+margin_left = 240.0
+margin_top = 160.0
+margin_right = 316.0
+margin_bottom = 173.0
+custom_fonts/font = SubResource( 5 )
+text = "9999999"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="black" type="Polygon2D" parent="."]
+visible = false
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 0, 0, 320, 0, 320, 180, 0, 180 )
+
+[node name="black_anim_player" type="AnimationPlayer" parent="black"]
+autoplay = "appear"
+anims/appear = SubResource( 3 )
+anims/disappear = SubResource( 4 )

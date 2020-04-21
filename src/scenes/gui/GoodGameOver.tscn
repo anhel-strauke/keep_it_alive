@@ -1,0 +1,197 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://fonts/ARCADECLASSIC.TTF" type="DynamicFontData" id=1]
+[ext_resource path="res://textures/sprites/pennywise_dance.png" type="Texture" id=2]
+[ext_resource path="res://scenes/gui/GoodGameOver.gd" type="Script" id=3]
+[ext_resource path="res://sounds/game/high_score.ogg" type="AudioStream" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 24
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "dance"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "dance"
+length = 8.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("pennywise_dance:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4, 8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 64, 136 ), Vector2( 256, 136 ), Vector2( 64, 136 ) ]
+}
+
+[sub_resource type="DynamicFont" id=6]
+size = 12
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=8]
+resource_name = "music"
+length = 3.0
+tracks/0/type = "audio"
+tracks/0/path = NodePath("AudioStreamPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 4 )
+} ],
+"times": PoolRealArray( 0.5 )
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "disappear"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "run_main_menu"
+} ]
+}
+
+[node name="GoodGameOver" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="background" type="Polygon2D" parent="."]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 0, 0, 320, 0, 320, 184, 0, 184 )
+
+[node name="new_hi_score_lbl" type="Label" parent="background"]
+margin_left = 56.0
+margin_top = 48.0
+margin_right = 264.0
+margin_bottom = 81.0
+custom_fonts/font = SubResource( 1 )
+text = "NEW   HI   SCORE"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="congrats_lbl" type="Label" parent="background"]
+margin_left = 64.0
+margin_top = 16.0
+margin_right = 256.0
+margin_bottom = 33.0
+custom_fonts/font = SubResource( 2 )
+text = "CONGRATULATIONS"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hi_score" type="Label" parent="background"]
+margin_left = 64.0
+margin_top = 88.0
+margin_right = 256.0
+margin_bottom = 113.0
+custom_fonts/font = SubResource( 3 )
+text = "9999999"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pennywise_dance" type="Sprite" parent="background"]
+position = Vector2( 64, 136 )
+texture = ExtResource( 2 )
+hframes = 3
+
+[node name="dance_anim" type="AnimationPlayer" parent="background/pennywise_dance"]
+autoplay = "dance"
+anims/dance = SubResource( 4 )
+
+[node name="penniwyse_move" type="AnimationPlayer" parent="background"]
+autoplay = "dance"
+anims/dance = SubResource( 5 )
+
+[node name="click_to_continue_lbl" type="Label" parent="background"]
+margin_left = 64.0
+margin_top = 168.0
+margin_right = 256.0
+margin_bottom = 182.0
+custom_fonts/font = SubResource( 6 )
+text = "CLICK  TO  CONTINUE"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="music_anim" type="AnimationPlayer" parent="."]
+anims/music = SubResource( 8 )
+
+[node name="black" type="Polygon2D" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 0, 0, 320, 0, 320, 184, 0, 184 )
+
+[node name="black_anim_player" type="AnimationPlayer" parent="black"]
+anims/disappear = SubResource( 7 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )

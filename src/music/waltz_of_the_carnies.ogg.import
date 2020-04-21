@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/waltz_of_the_carnies.ogg-3a24f85143b546796ef75591fe9c2df8.oggstr"
+
+[deps]
+
+source_file="res://music/waltz_of_the_carnies.ogg"
+dest_files=[ "res://.import/waltz_of_the_carnies.ogg-3a24f85143b546796ef75591fe9c2df8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

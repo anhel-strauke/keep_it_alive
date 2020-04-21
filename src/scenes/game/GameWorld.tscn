@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://scenes/game/GameWorld.gd" type="Script" id=1]
 [ext_resource path="res://textures/world/background.png" type="Texture" id=2]
@@ -6,13 +6,302 @@
 [ext_resource path="res://scenes/game/WaterSwitch.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/game/ShipMaster.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/game/ShipSpawner.tscn" type="PackedScene" id=6]
-[ext_resource path="res://scenes/game/Hole.tscn" type="PackedScene" id=7]
+[ext_resource path="res://tilesets/water_tileset.tres" type="TileSet" id=7]
 [ext_resource path="res://scenes/game/PennywiseDrain.tscn" type="PackedScene" id=8]
+[ext_resource path="res://textures/tutorial/failed_message.png" type="Texture" id=9]
+[ext_resource path="res://scenes/game/Hole.tscn" type="PackedScene" id=10]
+[ext_resource path="res://effects/PennywiseHandEffect.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/game/AnimatedScores.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scenes/game/TutorialSpawnLord.tscn" type="PackedScene" id=13]
+[ext_resource path="res://textures/sprites/pennywise_dance.png" type="Texture" id=14]
+[ext_resource path="res://effects/PennywiseEyesEffect.tscn" type="PackedScene" id=15]
+[ext_resource path="res://textures/tutorial/tutorial_arrows_1.png" type="Texture" id=16]
+[ext_resource path="res://textures/tutorial/tutorial_arrows_2.png" type="Texture" id=17]
+[ext_resource path="res://textures/tutorial/click_arrow.png" type="Texture" id=18]
+[ext_resource path="res://fonts/ARCADECLASSIC.TTF" type="DynamicFontData" id=19]
+[ext_resource path="res://scenes/game/SpawnLord.tscn" type="PackedScene" id=20]
+[ext_resource path="res://scenes/game/MainSpawnLord.gd" type="Script" id=21]
+[ext_resource path="res://scenes/game/LifeCounter.tscn" type="PackedScene" id=22]
 
 [sub_resource type="Animation" id=1]
 resource_name = "spawn"
 length = 30.0
 loop = true
+
+[sub_resource type="Animation" id=4]
+resource_name = "dance"
+length = 0.6
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "enter_pennywise"
+length = 9.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("pennywise_dance:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.5, 1.5, 3, 4, 5, 5.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 336, 80 ), Vector2( 336, 80 ), Vector2( 160, 80 ), Vector2( 160, 80 ), Vector2( 160, 24 ), Vector2( 160, 24 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("pennywise_dance:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5, 6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("PennywiseEyesEffect")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 6.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "effect"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("../PennywiseDrain")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "pause_eyes_animation"
+}, {
+"args": [  ],
+"method": "resume_eyes_animation"
+} ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 9 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "tutorial_phase_2"
+} ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "tutorial_failed"
+length = 5.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("failed_message:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 5.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "tutorial_phase_2"
+} ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "tutorial_phase_2"
+length = 10.0
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "show_arrows"
+} ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "arrows"
+length = 0.6
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "arrows"
+length = 0.6
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "arrow_anim"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 4, 10 )
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 8, 4 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 12
+font_data = ExtResource( 19 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 12
+font_data = ExtResource( 19 )
+
+[sub_resource type="Animation" id=15]
+resource_name = "appear"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "disappear"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "transit_to_other_scene"
+} ]
+}
 
 [node name="GameWorld" type="Node2D"]
 script = ExtResource( 1 )
@@ -26,9 +315,39 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Holes" type="Node2D" parent="."]
+
+[node name="Hole" parent="Holes" instance=ExtResource( 10 )]
+position = Vector2( 72, 88 )
+
+[node name="Hole2" parent="Holes" instance=ExtResource( 10 )]
+position = Vector2( 120, 96 )
+
+[node name="Hole3" parent="Holes" instance=ExtResource( 10 )]
+position = Vector2( 152, 156 )
+
+[node name="Hole4" parent="Holes" instance=ExtResource( 10 )]
+position = Vector2( 284, 108 )
+
+[node name="Hole5" parent="Holes" instance=ExtResource( 10 )]
+position = Vector2( 184, 120 )
+
+[node name="PennywiseDrain" parent="." instance=ExtResource( 8 )]
+position = Vector2( 128, 16 )
+
 [node name="WaterTileMap" parent="." instance=ExtResource( 3 )]
-modulate = Color( 1, 1, 1, 0.501961 )
-tile_data = PoolIntArray( -131059, 3, 0, -65523, 3, 0, 13, 3, 0, 131070, 0, 0, 131071, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 4, 0, 65549, 3, 0, 65552, 11, 0, 65553, 1, 0, 65554, 1, 0, 65555, 1, 0, 65556, 1, 0, 65557, 1, 0, 131076, 2, 0, 131080, 3, 0, 131081, 3, 0, 131082, 3, 0, 131083, 3, 0, 131085, 3, 0, 131088, 2, 0, 196612, 2, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 7, 0, 196617, 3, 0, 196618, 3, 0, 196619, 8, 0, 196620, 1, 0, 196621, 8, 0, 196622, 1, 0, 196623, 1, 0, 196624, 2, 0, 262148, 2, 0, 262153, 3, 0, 262154, 3, 0, 262160, 2, 0, 327688, 1, 0, 327689, 5, 0, 327690, 3, 0, 327696, 9, 0, 327697, 4, 0, 393220, 3, 0, 393225, 3, 0, 393226, 8, 0, 393227, 1, 0, 393228, 11, 0, 393229, 1, 0, 393230, 1, 0, 393231, 10, 0, 393232, 0, 0, 458754, 10, 0, 458755, 0, 0, 458756, 7, 0, 458757, 0, 0, 458758, 0, 0, 458759, 0, 0, 458760, 0, 0, 458761, 4, 0, 458764, 2, 0, 458767, 3, 0, 524290, 3, 0, 524297, 2, 0, 524300, 2, 0, 524303, 3, 0, 589826, 3, 0, 589836, 2, 0, 589839, 8, 0, 589840, 1, 0, 589841, 1, 0, 589842, 1, 0, 589843, 1, 0, 589844, 1, 0, 589845, 1, 0, 655362, 3, 0, 655372, 2, 0, 720898, 3, 0, 720908, 2, 0, 786434, 3, 0, 786444, 2, 0 )
+modulate = Color( 1, 1, 1, 0.823529 )
+position = Vector2( -1, -1 )
+tile_data = PoolIntArray( 15, 19, 0, 131070, 0, 0, 131071, 0, 0, 65536, 0, 0, 65537, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 4, 0, 65544, 19, 0, 65545, 19, 0, 65546, 19, 0, 65547, 19, 0, 65549, 10, 0, 65550, 0, 0, 65551, 7, 0, 65552, 11, 0, 65553, 1, 0, 65554, 1, 0, 65555, 1, 0, 65556, 1, 0, 65557, 1, 0, 131076, 2, 0, 131080, 3, 0, 131081, 3, 0, 131082, 3, 0, 131083, 3, 0, 131085, 3, 0, 131088, 2, 0, 196612, 2, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 7, 0, 196617, 3, 0, 196618, 3, 0, 196619, 3, 0, 196621, 8, 0, 196622, 1, 0, 196623, 1, 0, 196624, 6, 0, 262148, 2, 0, 262151, 11, 0, 262152, 1, 0, 262153, 5, 0, 262154, 3, 0, 262155, 3, 0, 262157, 2, 0, 327684, 19, 0, 327687, 14, 0, 327689, 3, 0, 327690, 3, 0, 327691, 11, 0, 327692, 1, 0, 327693, 6, 0, 393220, 3, 0, 393225, 3, 0, 393226, 3, 0, 393227, 2, 0, 393231, 10, 0, 393232, 0, 0, 393233, 12, 0, 458752, 10, 0, 458753, 0, 0, 458754, 0, 0, 458755, 0, 0, 458756, 7, 0, 458757, 0, 0, 458758, 0, 0, 458759, 4, 0, 458761, 3, 0, 458762, 3, 0, 458763, 18, 0, 458767, 3, 0, 524288, 3, 0, 524295, 9, 0, 524296, 0, 0, 524297, 4, 0, 524298, 8, 0, 524299, 8, 0, 524300, 1, 0, 524301, 1, 0, 524302, 1, 0, 524303, 3, 0, 589824, 3, 0, 589833, 14, 0, 589839, 8, 0, 589840, 1, 0, 589841, 1, 0, 589842, 1, 0, 589843, 1, 0, 589844, 1, 0, 589845, 1, 0, 720894, 0, 0, 720895, 0, 0, 655360, 7, 0 )
+
+[node name="AdditionalWaterTilemap" type="TileMap" parent="WaterTileMap"]
+tile_set = ExtResource( 7 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( 327684, 18, 0, 458763, 19, 0 )
+
+[node name="PennywiseHandEffect" parent="." instance=ExtResource( 11 )]
+position = Vector2( 128, 16 )
 
 [node name="ShipSpawnAnim" type="AnimationPlayer" parent="."]
 autoplay = "spawn"
@@ -43,59 +362,190 @@ position = Vector2( 72, 120 )
 position = Vector2( 72, 56 )
 
 [node name="WaterSwitch3" parent="WaterSwitches" instance=ExtResource( 4 )]
-position = Vector2( 152, 88 )
+position = Vector2( 152, 72 )
 
 [node name="WaterSwitch4" parent="WaterSwitches" instance=ExtResource( 4 )]
-position = Vector2( 152, 120 )
+position = Vector2( 152, 136 )
 
 [node name="WaterSwitch5" parent="WaterSwitches" instance=ExtResource( 4 )]
-position = Vector2( 200, 104 )
+position = Vector2( 184, 88 )
 
 [node name="WaterSwitch6" parent="WaterSwitches" instance=ExtResource( 4 )]
-position = Vector2( 264, 56 )
+position = Vector2( 184, 136 )
 
 [node name="WaterSwitch7" parent="WaterSwitches" instance=ExtResource( 4 )]
 position = Vector2( 216, 56 )
 
 [node name="WaterSwitch8" parent="WaterSwitches" instance=ExtResource( 4 )]
-position = Vector2( 248, 104 )
+position = Vector2( 248, 136 )
 
 [node name="Spawners" type="Node2D" parent="."]
 
-[node name="ShipSpawner" parent="Spawners" instance=ExtResource( 6 )]
+[node name="ShipSpawner1" parent="Spawners" instance=ExtResource( 6 )]
 position = Vector2( -24, 24 )
-delay = 5.0
-mode = 1
 
 [node name="ShipSpawner2" parent="Spawners" instance=ExtResource( 6 )]
-position = Vector2( 40, 200 )
+position = Vector2( -24, 168 )
 delay = 4.0
-mode = 1
+
+[node name="ShipSpawner3" parent="Spawners" instance=ExtResource( 6 )]
+position = Vector2( 344, 152 )
 
 [node name="ShipSpawner4" parent="Spawners" instance=ExtResource( 6 )]
-position = Vector2( 344, 152 )
-mode = 1
-
-[node name="ShipSpawner5" parent="Spawners" instance=ExtResource( 6 )]
 position = Vector2( 344, 24 )
-delay = 6.0
-mode = 1
+delay = 7.0
 
-[node name="Holes" type="Node2D" parent="."]
+[node name="TutorialSpawnLord" parent="." instance=ExtResource( 13 )]
+first_spawner_name = NodePath("../Spawners/ShipSpawner1")
+water_switch_name = NodePath("../WaterSwitches/WaterSwitch2")
+ship_master_name = NodePath("../ShipMaster")
+life_counter_name = NodePath("../LifeCounter")
 
-[node name="Hole" parent="Holes" instance=ExtResource( 7 )]
-position = Vector2( 72, 88 )
+[node name="pennywise_dance" type="Sprite" parent="TutorialSpawnLord"]
+position = Vector2( 336, 80 )
+texture = ExtResource( 14 )
+hframes = 3
 
-[node name="Hole2" parent="Holes" instance=ExtResource( 7 )]
-position = Vector2( 120, 88 )
+[node name="dance_animation" type="AnimationPlayer" parent="TutorialSpawnLord/pennywise_dance"]
+autoplay = "dance"
+anims/dance = SubResource( 4 )
 
-[node name="Hole3" parent="Holes" instance=ExtResource( 7 )]
-position = Vector2( 280, 104 )
+[node name="tutorial_anims" type="AnimationPlayer" parent="TutorialSpawnLord"]
+anims/enter_pennywise = SubResource( 5 )
+anims/tutorial_failed = SubResource( 13 )
+anims/tutorial_phase_2 = SubResource( 8 )
 
-[node name="Hole4" parent="Holes" instance=ExtResource( 7 )]
-position = Vector2( 152, 152 )
-
-[node name="PennywiseDrain" parent="." instance=ExtResource( 8 )]
+[node name="PennywiseEyesEffect" parent="TutorialSpawnLord" instance=ExtResource( 15 )]
 position = Vector2( 128, 16 )
 
+[node name="tutorial_arrows_1" type="Sprite" parent="TutorialSpawnLord"]
+visible = false
+modulate = Color( 1, 1, 1, 0.717647 )
+position = Vector2( 72, 56 )
+texture = ExtResource( 16 )
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TutorialSpawnLord/tutorial_arrows_1"]
+autoplay = "arrows"
+anims/arrows = SubResource( 6 )
+
+[node name="tutorial_arrows_2" type="Sprite" parent="TutorialSpawnLord"]
+visible = false
+modulate = Color( 1, 1, 1, 0.717647 )
+position = Vector2( 80, 48 )
+texture = ExtResource( 17 )
+hframes = 3
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TutorialSpawnLord/tutorial_arrows_2"]
+autoplay = "arrows"
+anims/arrows = SubResource( 7 )
+
+[node name="click_arrow" type="Sprite" parent="TutorialSpawnLord"]
+visible = false
+position = Vector2( 36, 76 )
+texture = ExtResource( 18 )
+hframes = 2
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TutorialSpawnLord/click_arrow"]
+autoplay = "arrow_anim"
+anims/arrow_anim = SubResource( 14 )
+
+[node name="first_ship_detect" type="Area2D" parent="TutorialSpawnLord"]
+position = Vector2( 88, 56 )
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TutorialSpawnLord/first_ship_detect"]
+position = Vector2( 4, 0 )
+shape = SubResource( 9 )
+
+[node name="first_ship_wrong_detect" type="Area2D" parent="TutorialSpawnLord"]
+position = Vector2( 52, 72 )
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TutorialSpawnLord/first_ship_wrong_detect"]
+position = Vector2( 20, 4 )
+shape = SubResource( 10 )
+
+[node name="failed_message" type="Node2D" parent="TutorialSpawnLord"]
+visible = false
+
+[node name="failed_message" type="Sprite" parent="TutorialSpawnLord/failed_message"]
+position = Vector2( 160, 92 )
+texture = ExtResource( 9 )
+
+[node name="MainSpawnLord" parent="." instance=ExtResource( 20 )]
+script = ExtResource( 21 )
+
 [node name="CharactersRoot" type="YSort" parent="."]
+
+[node name="ScoresLbl" type="Label" parent="."]
+margin_left = 108.0
+margin_right = 143.0
+margin_bottom = 13.0
+custom_fonts/font = SubResource( 2 )
+text = "score"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HiScoreLbl" type="Label" parent="."]
+margin_left = 212.0
+margin_right = 247.0
+margin_bottom = 13.0
+custom_fonts/font = SubResource( 2 )
+text = "HI  SCORE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HiScore" type="Label" parent="."]
+margin_left = 264.0
+margin_right = 317.0
+margin_bottom = 13.0
+custom_fonts/font = SubResource( 2 )
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LifeLbl" type="Label" parent="."]
+margin_left = 4.0
+margin_right = 36.0
+margin_bottom = 13.0
+custom_fonts/font = SubResource( 2 )
+text = "life"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Scores" parent="." instance=ExtResource( 12 )]
+margin_left = 144.0
+margin_right = 193.0
+margin_bottom = 13.0
+custom_fonts/font = SubResource( 3 )
+align = 2
+
+[node name="LifeCounter" parent="." instance=ExtResource( 22 )]
+position = Vector2( 36, 0 )
+
+[node name="black_screen" type="Polygon2D" parent="."]
+visible = false
+z_index = 2
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 0, 0, 320, 0, 320, 180, 0, 180 )
+
+[node name="black_anim_player" type="AnimationPlayer" parent="black_screen"]
+autoplay = "appear"
+anims/appear = SubResource( 15 )
+anims/disappear = SubResource( 16 )
+[connection signal="hunt_failed" from="ShipMaster" to="LifeCounter" method="loose_life"]
+[connection signal="kid_captured" from="PennywiseDrain" to="PennywiseHandEffect" method="effect"]
+[connection signal="area_entered" from="TutorialSpawnLord/first_ship_detect" to="TutorialSpawnLord" method="_on_first_ship_detect_area_entered"]
+[connection signal="area_entered" from="TutorialSpawnLord/first_ship_wrong_detect" to="TutorialSpawnLord" method="_on_first_ship_wrong_detect_area_entered"]
+[connection signal="flashed" from="Scores" to="LifeCounter" method="gain_life"]
+[connection signal="game_over" from="LifeCounter" to="." method="_on_game_over"]

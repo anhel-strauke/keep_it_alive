@@ -1,0 +1,105 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://textures/gui/credits_1.png" type="Texture" id=1]
+[ext_resource path="res://textures/gui/credits_2.png" type="Texture" id=2]
+[ext_resource path="res://scenes/gui/Credits.gd" type="Script" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "credits"
+length = 55.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("moving_credits:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 50 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -8 ), Vector2( 0, -1700 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("moving_credits:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 54, 55 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 55 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_go_to_main_menu"
+} ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "stop"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("moving_credits:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_go_to_main_menu"
+} ]
+}
+
+[node name="Credits" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="back" type="Polygon2D" parent="."]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 0, 0, 320, 0, 320, 180, 0, 180 )
+
+[node name="moving_credits" type="Node2D" parent="back"]
+position = Vector2( 0, -8 )
+
+[node name="credits_1" type="Sprite" parent="back/moving_credits"]
+position = Vector2( 0, 216 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="credits_2" type="Sprite" parent="back/moving_credits/credits_1"]
+position = Vector2( 0, 720 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="play_credits" type="AnimationPlayer" parent="back"]
+autoplay = "credits"
+anims/credits = SubResource( 1 )
+
+[node name="alarm_exit" type="AnimationPlayer" parent="back"]
+anims/stop = SubResource( 2 )

@@ -1,0 +1,148 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://fonts/ARCADECLASSIC.TTF" type="DynamicFontData" id=1]
+[ext_resource path="res://scenes/gui/BadGameOver.gd" type="Script" id=2]
+[ext_resource path="res://sounds/game/bad_game_over.ogg" type="AudioStream" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "disappear"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 4.5, 5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "run_main_menu"
+} ]
+}
+tracks/3/type = "audio"
+tracks/3/path = NodePath("../AudioStreamPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 3 )
+} ],
+"times": PoolRealArray( 0.8 )
+}
+
+[node name="BadGameOver" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="background" type="Polygon2D" parent="."]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 0, 0, 320, 0, 320, 184, 0, 184 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="game_over_lbl" type="Label" parent="background"]
+margin_left = 80.0
+margin_top = 48.0
+margin_right = 236.0
+margin_bottom = 81.0
+custom_fonts/font = SubResource( 1 )
+text = "GAME    OVER"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="score_lbl" type="Label" parent="background"]
+margin_left = 88.0
+margin_top = 96.0
+margin_right = 133.0
+margin_bottom = 113.0
+custom_fonts/font = SubResource( 2 )
+text = "SCORE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hi_score_lbl" type="Label" parent="background"]
+margin_left = 88.0
+margin_top = 120.0
+margin_right = 133.0
+margin_bottom = 137.0
+custom_fonts/font = SubResource( 2 )
+text = "HI  SCORE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="score" type="Label" parent="background"]
+margin_left = 160.0
+margin_top = 96.0
+margin_right = 237.0
+margin_bottom = 113.0
+custom_fonts/font = SubResource( 2 )
+text = "9999999"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hi_score" type="Label" parent="background"]
+margin_left = 160.0
+margin_top = 120.0
+margin_right = 237.0
+margin_bottom = 137.0
+custom_fonts/font = SubResource( 2 )
+text = "9999999"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="black" type="Polygon2D" parent="."]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 0, 0, 320, 0, 320, 184, 0, 184 )
+
+[node name="black_anim_player" type="AnimationPlayer" parent="black"]
+autoplay = "disappear"
+anims/disappear = SubResource( 3 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )

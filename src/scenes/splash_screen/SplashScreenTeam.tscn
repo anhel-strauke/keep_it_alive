@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://textures/splash_screen/splash_screen_team.png" type="Texture" id=1]
+[ext_resource path="res://sounds/splash/splash_team.ogg" type="AudioStream" id=2]
+[ext_resource path="res://scenes/splash_screen/SplashScreen.gd" type="Script" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "show_and_hide"
+length = 4.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6, 1.7, 4.2, 4.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "audio"
+tracks/1/path = NodePath("AudioStreamPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 2 )
+} ],
+"times": PoolRealArray( 1.4 )
+}
+
+[node name="SplashScreenTeam" type="Node2D"]
+script = ExtResource( 3 )
+next_scene = "res://scenes/splash_screen/SplashScreenLD.tscn"
+animation_fadeout_moment = 4.2
+
+[node name="splash_screen_team" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color( 0, 0, 0, 1 )
+polygon = PoolVector2Array( 0, 0, 320, 0, 320, 184, 0, 184 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "show_and_hide"
+anims/show_and_hide = SubResource( 1 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

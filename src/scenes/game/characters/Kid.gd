@@ -21,6 +21,7 @@ var speed: float = 0.0
 var run_away_target := Vector2.ZERO
 var death_target := Vector2.ZERO
 var direction := LEFT
+var coat_color: int = 0 setget set_coat_color
 
 const minimal_distance = 24.0
 const maximum_distance = 72.0
@@ -29,7 +30,7 @@ const max_speed = 30.0
 const run_away_speed = 55.0
 
 onready var anim_player = $AnimationPlayer
-onready var sprite = $sprite
+onready var sprites = [$sprite_0, $sprite_1, $sprite_2, $sprite_3]
 
 signal successfully_ran_away(kid)
 
@@ -46,9 +47,9 @@ func set_ship(sh: Ship) -> void:
 func move(target: Vector2, amount: float):
 	var new_pos = global_position.move_toward(target, amount)
 	if new_pos.x < global_position.x:
-		sprite.flip_h = true
+		sprites[coat_color].flip_h = true
 	else:
-		sprite.flip_h = false
+		sprites[coat_color].flip_h = false
 	global_position = new_pos
 
 
@@ -116,3 +117,11 @@ func run_to_death(global_point: Vector2) -> void:
 	anim_player.play("walk")
 	death_target = global_point
 	speed = max_speed
+
+
+func set_coat_color(color: int) -> void:
+	coat_color = color
+	for i in range(sprites.size()):
+		sprites[i].visible = color == i
+	
+	

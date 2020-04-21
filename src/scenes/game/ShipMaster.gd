@@ -12,9 +12,13 @@ var pennywise_drain: PennywiseDrain = null
 
 const ShipScene = preload("res://scenes/game/characters/Ship.tscn")
 const KidScene = preload("res://scenes/game/characters/Kid.tscn")
+const KidDeathEffectScene = preload("res://effects/KidDeathEffect.tscn")
+const ScoreFlyEffectScene = preload("res://effects/ScoreFlyEffect.tscn")
 
 
 signal ship_destroyed(ship)
+signal hunt_failed()
+signal hunt_success()
 
 
 func _ready() -> void:
@@ -84,6 +88,7 @@ func _find_pennywise_drain(node: Node) -> bool:
 		if child is PennywiseDrain:
 			pennywise_drain = child as PennywiseDrain
 			pennywise_drain.connect("kid_captured", self, "kill_kid")
+			pennywise_drain.connect("need_kid_death_effect", self, "create_kid_death_effect")
 			return true
 		else:
 			if _find_pennywise_drain(child):
@@ -91,7 +96,7 @@ func _find_pennywise_drain(node: Node) -> bool:
 	return false
 
 
-func create_ship_at(global_pos: Vector2) -> void:
+func create_ship_at(global_pos: Vector2, coat_color: int) -> void:
 	var ship := ShipScene.instance()
 	chars_root.add_child(ship)
 	ships.append(ship)
@@ -103,6 +108,10 @@ func create_ship_at(global_pos: Vector2) -> void:
 	kids.append(kid)
 	kid.global_position = global_pos + Vector2(0, 16)
 	kid.ship = ship
+	if coat_color >= 0:
+		kid.coat_color = coat_color
+	else:
+		kid.coat_color = rand_range(0, 3)
 	kid.connect("successfully_ran_away", self, "free_kid")
 	
 
@@ -114,6 +123,9 @@ func draw_ship(ship: Ship) -> void:
 			kid.ship = null
 			if catch:
 				kid.run_to_death(pennywise_drain.kid_position())
+			else:
+				emit_signal("hunt_failed")
+				$life_lost_sound.play()
 			break
 	var i = ships.find(ship)
 	if i >= 0:
@@ -135,6 +147,23 @@ func kill_kid(kid: Kid) -> void:
 	kid.queue_free()
 
 
+func create_kid_death_effect(glob_from: Vector2, glob_to: Vector2, coat: int) -> void:
+	var effect = KidDeathEffectScene.instance()
+	chars_root.add_child(effect)
+	effect.scores = 100
+	effect.coat_color = coat
+	effect.global_target_point = glob_to
+	effect.global_start_point = glob_from
+	effect.connect("finished", world, "add_scores")
+	var fly_effect = ScoreFlyEffectScene.instance()
+	world.add_child(fly_effect)
+	fly_effect.value = effect.scores
+	fly_effect.global_position = glob_to + Vector2(0, -8)
+	emit_signal("hunt_success")
+	$kid_catch_sound.play()
+
+
+
 func update_ship_path(ship: Ship) -> void:
 	var glob_ship_pos = ship.global_position
 	var path = tilemap.build_path(glob_ship_pos)
@@ -144,3 +173,8 @@ func update_ship_path(ship: Ship) -> void:
 func update_all_ship_paths(_tile_pos: Vector2) -> void:
 	for ship in ships:
 		update_ship_path(ship)
+
+
+func set_switches_enabled(e: bool) -> void:
+	for sw in water_switches:
+		sw.enabled = e

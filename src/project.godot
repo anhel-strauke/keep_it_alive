@@ -25,9 +25,19 @@ _global_script_classes=[ {
 "path": "res://scenes/game/characters/Kid.gd"
 }, {
 "base": "Node2D",
+"class": "KidDeathEffect",
+"language": "GDScript",
+"path": "res://effects/KidDeathEffect.gd"
+}, {
+"base": "Node2D",
 "class": "PennywiseDrain",
 "language": "GDScript",
 "path": "res://scenes/game/PennywiseDrain.gd"
+}, {
+"base": "Node2D",
+"class": "RootScene",
+"language": "GDScript",
+"path": "res://scenes/RootScene.gd"
 }, {
 "base": "Node2D",
 "class": "Ship",
@@ -44,6 +54,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/game/ShipSpawner.gd"
 }, {
+"base": "Node",
+"class": "SpawnLord",
+"language": "GDScript",
+"path": "res://scenes/game/SpawnLord.gd"
+}, {
 "base": "Node2D",
 "class": "WaterSwitch",
 "language": "GDScript",
@@ -58,10 +73,13 @@ _global_script_class_icons={
 "GameWorld": "",
 "Hole": "",
 "Kid": "",
+"KidDeathEffect": "",
 "PennywiseDrain": "",
+"RootScene": "",
 "Ship": "",
 "ShipMaster": "",
 "ShipSpawner": "res://textures/sprites/ship.png",
+"SpawnLord": "",
 "WaterSwitch": "",
 "WaterTileMap": ""
 }
@@ -71,8 +89,12 @@ _global_script_class_icons={
 config/name="Keep It Alive"
 config/description="Game for LD46 by And Tak Soidet Games.
 https://andtaksoidet.games/en/"
-run/main_scene="res://scenes/game/GameWorld.tscn"
+run/main_scene="res://scenes/splash_screen/SplashScreenTeam.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Global="*res://global.gd"
 
 [display]
 

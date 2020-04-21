@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://effects/PennywiseEyesEffect.gd" type="Script" id=1]
+[ext_resource path="res://textures/water/pennywise_drain.png" type="Texture" id=3]
+[ext_resource path="res://textures/water/pennywise_eyes.png" type="Texture" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "effect"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("pennywise_eyes:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6, 2, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[node name="PennywiseEyesEffect" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="pennywise_drain" type="Sprite" parent="."]
+visible = false
+position = Vector2( 32, 8 )
+texture = ExtResource( 3 )
+
+[node name="pennywise_eyes" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 30, 8 )
+texture = ExtResource( 4 )
+region_enabled = true
+region_rect = Rect2( 0, 3, 8, 6 )
+
+[node name="effect_animation" type="AnimationPlayer" parent="."]
+anims/effect = SubResource( 1 )

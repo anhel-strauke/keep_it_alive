@@ -6,7 +6,8 @@ enum {
 	IDLE
 }
 
-export var auto_switch_time: float = 4.0
+export var auto_switch_time: float = 6.0
+export var enabled: bool = true setget set_enabled
 
 var was_pressed := false
 var time := 0.0
@@ -28,6 +29,7 @@ func _do_splash():
 	var effect = WaterSplashEffectScene.instance()
 	get_tree().root.add_child(effect)
 	effect.global_position = global_position
+	$splash_sound.play()
 
 
 func _switch():
@@ -50,6 +52,8 @@ func _process(delta: float) -> void:
 
 
 func _on_Area2D_input_event(_viewport, event, _shape_idx) -> void:
+	if not enabled:
+		return
 	if not event:
 		return
 	if not event is InputEventMouseButton:
@@ -71,3 +75,8 @@ func _on_ShipCollisionDetector_area_entered(area):
 
 func _on_ShipCollisionDetector_area_exited(area):
 	busy = false
+
+
+func set_enabled(e: bool) -> void:
+	enabled = e
+	$lines.visible = e
