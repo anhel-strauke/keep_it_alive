@@ -21,6 +21,7 @@ export(NodePath) var life_counter_name: String = ""
 
 onready var anim_player = $tutorial_anims
 
+
 func initialize() -> void:
 	first_spawner = get_node(first_spawner_name)
 	first_spawner.coat_color = 0
@@ -34,10 +35,6 @@ func initialize() -> void:
 	tries = life_counter.value
 
 
-func do_process(delta: float) -> void:
-	pass
-
-
 func _on_water_switch_clicked(_pos: Vector2) -> void:
 	water_switch_wrong = not water_switch_wrong
 	$tutorial_arrows_1.visible = water_switch_wrong
@@ -49,6 +46,7 @@ func tutorial_phase_2() -> void:
 	first_spawner.spawn()
 	phase = PHASE_2
 	anim_player.play("tutorial_phase_2")
+
 
 func show_arrows() -> void:
 	$tutorial_arrows_1.visible = true

@@ -90,7 +90,12 @@ config/name="Keep It Alive"
 config/description="Game for LD46 by And Tak Soidet Games.
 https://andtaksoidet.games/en/"
 run/main_scene="res://scenes/splash_screen/SplashScreenTeam.tscn"
+boot_splash/image="res://boot_splash.png"
+boot_splash/use_filter=false
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
+config/macos_native_icon="res://icon.icns"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 

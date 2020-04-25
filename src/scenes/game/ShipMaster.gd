@@ -100,7 +100,7 @@ func create_ship_at(global_pos: Vector2, coat_color: int) -> void:
 	var ship := ShipScene.instance()
 	chars_root.add_child(ship)
 	ships.append(ship)
-	ship.connect("dead_end_reached", self, "draw_ship")
+	ship.connect("dead_end_reached", self, "crash_ship")
 	ship.global_position = global_pos
 	update_ship_path(ship)
 	var kid := KidScene.instance()
@@ -113,10 +113,11 @@ func create_ship_at(global_pos: Vector2, coat_color: int) -> void:
 	else:
 		kid.coat_color = rand_range(0, 3)
 	kid.connect("successfully_ran_away", self, "free_kid")
-	
 
 
-func draw_ship(ship: Ship) -> void:
+func crash_ship(ship: Ship) -> void:
+	if not ship:
+		return
 	var catch = pennywise_drain.has_ship(ship)
 	for kid in kids:
 		if kid.ship == ship:

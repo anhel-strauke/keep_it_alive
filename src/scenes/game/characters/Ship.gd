@@ -7,15 +7,13 @@ onready var area = $Area2D
 
 signal dead_end_reached(ship)
 
-func _ready():
-	pass
 
 func _process(delta) -> void:
 	if path.size() > 0:
 		var distance = speed * delta
 		move_along_path(distance)
-		
-		
+
+
 # Method taken from https://www.youtube.com/watch?v=0fPOt0Jw52s
 func move_along_path(distance: float) -> void:
 	var start_point := global_position

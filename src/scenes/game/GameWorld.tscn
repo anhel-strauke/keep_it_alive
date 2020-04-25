@@ -28,7 +28,7 @@ resource_name = "spawn"
 length = 30.0
 loop = true
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=2]
 resource_name = "dance"
 length = 0.6
 loop = true
@@ -46,7 +46,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 resource_name = "enter_pennywise"
 length = 9.0
 tracks/0/type = "value"
@@ -119,7 +119,7 @@ tracks/4/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=4]
 resource_name = "tutorial_failed"
 length = 5.5
 tracks/0/type = "value"
@@ -149,7 +149,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=5]
 resource_name = "tutorial_phase_2"
 length = 10.0
 tracks/0/type = "method"
@@ -203,7 +203,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2 ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=8]
 resource_name = "arrow_anim"
 length = 0.4
 loop = true
@@ -226,15 +226,15 @@ extents = Vector2( 4, 10 )
 [sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 8, 4 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=11]
 size = 12
 font_data = ExtResource( 19 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=12]
 size = 12
 font_data = ExtResource( 19 )
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=13]
 resource_name = "appear"
 length = 0.5
 tracks/0/type = "value"
@@ -262,7 +262,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=14]
 resource_name = "disappear"
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
@@ -408,12 +408,12 @@ hframes = 3
 
 [node name="dance_animation" type="AnimationPlayer" parent="TutorialSpawnLord/pennywise_dance"]
 autoplay = "dance"
-anims/dance = SubResource( 4 )
+anims/dance = SubResource( 2 )
 
 [node name="tutorial_anims" type="AnimationPlayer" parent="TutorialSpawnLord"]
-anims/enter_pennywise = SubResource( 5 )
-anims/tutorial_failed = SubResource( 13 )
-anims/tutorial_phase_2 = SubResource( 8 )
+anims/enter_pennywise = SubResource( 3 )
+anims/tutorial_failed = SubResource( 4 )
+anims/tutorial_phase_2 = SubResource( 5 )
 
 [node name="PennywiseEyesEffect" parent="TutorialSpawnLord" instance=ExtResource( 15 )]
 position = Vector2( 128, 16 )
@@ -450,7 +450,7 @@ frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="TutorialSpawnLord/click_arrow"]
 autoplay = "arrow_anim"
-anims/arrow_anim = SubResource( 14 )
+anims/arrow_anim = SubResource( 8 )
 
 [node name="first_ship_detect" type="Area2D" parent="TutorialSpawnLord"]
 position = Vector2( 88, 56 )
@@ -486,7 +486,7 @@ script = ExtResource( 21 )
 margin_left = 108.0
 margin_right = 143.0
 margin_bottom = 13.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 11 )
 text = "score"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -496,7 +496,7 @@ __meta__ = {
 margin_left = 212.0
 margin_right = 247.0
 margin_bottom = 13.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 11 )
 text = "HI  SCORE"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -506,7 +506,7 @@ __meta__ = {
 margin_left = 264.0
 margin_right = 317.0
 margin_bottom = 13.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 11 )
 text = "0"
 align = 2
 __meta__ = {
@@ -517,7 +517,7 @@ __meta__ = {
 margin_left = 4.0
 margin_right = 36.0
 margin_bottom = 13.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 11 )
 text = "life"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -527,11 +527,13 @@ __meta__ = {
 margin_left = 144.0
 margin_right = 193.0
 margin_bottom = 13.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 12 )
 align = 2
+flash_every = 3000
 
 [node name="LifeCounter" parent="." instance=ExtResource( 22 )]
 position = Vector2( 36, 0 )
+max_value = 7
 
 [node name="black_screen" type="Polygon2D" parent="."]
 visible = false
@@ -541,8 +543,8 @@ polygon = PoolVector2Array( 0, 0, 320, 0, 320, 180, 0, 180 )
 
 [node name="black_anim_player" type="AnimationPlayer" parent="black_screen"]
 autoplay = "appear"
-anims/appear = SubResource( 15 )
-anims/disappear = SubResource( 16 )
+anims/appear = SubResource( 13 )
+anims/disappear = SubResource( 14 )
 [connection signal="hunt_failed" from="ShipMaster" to="LifeCounter" method="loose_life"]
 [connection signal="kid_captured" from="PennywiseDrain" to="PennywiseHandEffect" method="effect"]
 [connection signal="area_entered" from="TutorialSpawnLord/first_ship_detect" to="TutorialSpawnLord" method="_on_first_ship_detect_area_entered"]
